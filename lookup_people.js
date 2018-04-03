@@ -16,20 +16,16 @@ client.connect((err) => {
   if (err){
     return console.error("Connection Error", err);
   }
-
-    client.query('SELECT id, firstname, lastname, birthdate FROM famous_people WHERE firstname = $1;', [param], (err, result) => {
-   // client.query('SELECT firstname FROM famous_people WHERE firstname = Abraham;', (err, result) => {
- // client.query('SELECT * FROM famous_people', (err, result) => { THIS WORKS
+  client.query('SELECT id, firstname, lastname, birthdate FROM famous_people WHERE firstname = $1;', [param], (err, result) => {
     if(err){
       return console.error("error running query", err);
     }
     var finalResult = result.rows;
-    console.log(result.rows);
     console.log("Searching...")
     console.log(`Found ${result.rows.length} person(s) by the name '${param}': `)
     finalResult.forEach(function(item){
       console.log(`- ${item.id}: ${item.firstname} ${item.lastname}, born '${item.birthdate}'`);
-    })
-    client.end();
-  })
-})
+    });
+  client.end();
+  });
+});
